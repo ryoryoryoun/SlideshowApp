@@ -9,20 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
+
+    let imageNameArray = [
+        "gu",
+        "choki",
+        "pa",
+        ]
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // segueから遷移先のResultViewControllerを取得する
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
-        // 遷移先のResultViewControllerで宣言しているyに値を代入して渡す
-        // 画像の名前の配列(これってここでもう一回宣言しなきゃいけないの？？)
-        let imageNameArray = [
-            "gu",
-            "choki",
-            "pa",
-            ]
-        // 表示している画像の番号から名前を取り出し
+        // 遷移先のResultViewControllerで宣言しているxに値を代入して渡す
+        // 表示している画像の番号から名前を取り出しxに代入
         resultViewController.x = imageNameArray[dispImageNo]
-        
-
+        if timer != nil && self.playButton.currentTitle == "停止" {
+            self.timer?.invalidate()
+            timer = nil
+            self.playButton.setTitle("再生", for: .normal)
+            nextButtom.isEnabled = true
+            prevButton.isEnabled = true
+        }
     }
     
     //imageViewに対し何か行いたい時に設定
@@ -60,13 +66,6 @@ class ViewController: UIViewController {
     
     /// 表示している画像の番号を元に画像を表示する
     func displayImage() {
-        
-        // 画像の名前の配列
-        let imageNameArray = [
-            "gu",
-            "choki",
-            "pa",
-            ]
         
         // 画像の番号が正常な範囲を指しているかチェック
         // 範囲より下を指している場合、最後の画像を表示
@@ -124,9 +123,7 @@ class ViewController: UIViewController {
             prevButton.isEnabled = true
         }
     }
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        <#code#>
-//    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
